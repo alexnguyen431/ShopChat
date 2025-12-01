@@ -97,55 +97,52 @@ const FormattedMessage = ({
       }
       
       // Check if it's a list item (starts with -, *, or •)
+      // Convert list items to regular paragraphs without bullet points
       if (/^[-*•]\s+/.test(trimmedLine)) {
         const listContent = trimmedLine.replace(/^[-*•]\s+/, '')
         const product = findProductInText(listContent)
         
+        // Render as regular paragraph without bullet point
         elements.push(
-          <div key={`list-${lineIndex}`} className="my-2">
-            <div className="flex items-start gap-2">
-              <span className="text-gray-600 mt-1">•</span>
-              <div className="flex-1">
-                {formatInlineMarkdown(listContent)}
-                {/* Inline product tile */}
-                {product && !usedProductIds.has(product.id) && (
-                  <div className="mt-2 mb-3">
-                    <Link
-                      href={`/products/${product.handle}`}
-                      onClick={onClose}
-                      className="group flex items-center gap-3 border border-gray-200 rounded-lg p-2 transition-all max-w-md"
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.borderColor = '#5A31F4'
-                        e.currentTarget.style.backgroundColor = 'rgba(90, 49, 244, 0.05)'
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.borderColor = '#e5e7eb'
-                        e.currentTarget.style.backgroundColor = 'transparent'
-                      }}
-                    >
-                      {product.image && (
-                        <div className="relative w-16 h-16 bg-gray-100 rounded overflow-hidden flex-shrink-0">
-                          <Image
-                            src={product.image}
-                            alt={product.title}
-                            fill
-                            className="object-cover group-hover:scale-105 transition-transform duration-300"
-                            sizes="64px"
-                          />
-                        </div>
-                      )}
-                      <div className="flex-1 min-w-0">
-                        <p className="font-medium text-sm text-gray-900 transition-colors truncate" onMouseEnter={(e) => { e.currentTarget.style.color = '#5A31F4' }} onMouseLeave={(e) => { e.currentTarget.style.color = '#111827' }}>{product.title}</p>
-                        {product.color && (
-                          <p className="text-xs text-gray-600">{product.color}</p>
-                        )}
-                        <p className="font-semibold text-sm text-gray-900 mt-0.5">{product.price}</p>
-                      </div>
-                    </Link>
+          <div key={`para-${lineIndex}`} className="my-1">
+            {formatInlineMarkdown(listContent)}
+            {/* Inline product tile */}
+            {product && !usedProductIds.has(product.id) && (
+              <div className="mt-2 mb-3">
+                <Link
+                  href={`/products/${product.handle}`}
+                  onClick={onClose}
+                  className="group flex items-center gap-3 border border-gray-200 rounded-lg p-2 transition-all max-w-md"
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.borderColor = '#5A31F4'
+                    e.currentTarget.style.backgroundColor = 'rgba(90, 49, 244, 0.05)'
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.borderColor = '#e5e7eb'
+                    e.currentTarget.style.backgroundColor = 'transparent'
+                  }}
+                >
+                  {product.image && (
+                    <div className="relative w-16 h-16 bg-gray-100 rounded overflow-hidden flex-shrink-0">
+                      <Image
+                        src={product.image}
+                        alt={product.title}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-300"
+                        sizes="64px"
+                      />
+                    </div>
+                  )}
+                  <div className="flex-1 min-w-0">
+                    <p className="font-medium text-sm text-gray-900 transition-colors truncate" onMouseEnter={(e) => { e.currentTarget.style.color = '#5A31F4' }} onMouseLeave={(e) => { e.currentTarget.style.color = '#111827' }}>{product.title}</p>
+                    {product.color && (
+                      <p className="text-xs text-gray-600">{product.color}</p>
+                    )}
+                    <p className="font-semibold text-sm text-gray-900 mt-0.5">{product.price}</p>
                   </div>
-                )}
+                </Link>
               </div>
-            </div>
+            )}
           </div>
         )
         
