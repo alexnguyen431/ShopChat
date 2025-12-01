@@ -37,7 +37,7 @@ const Navigation = () => {
         <div className="relative flex items-center justify-end h-16">
           {/* Center - Logo */}
           <Link href="/" className="absolute left-1/2 -translate-x-1/2">
-            <h1 className="text-2xl font-bold tracking-tight">ALEX'S ATELIER</h1>
+            <h1 className="text-2xl tracking-tight font-serif">alex's atelier</h1>
           </Link>
 
           {/* Right - Actions */}

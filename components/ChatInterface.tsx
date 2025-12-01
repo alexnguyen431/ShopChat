@@ -349,7 +349,7 @@ const ChatInterface = ({ initialQuery = '', onClose }: ChatInterfaceProps) => {
             <path d="m92.76,26.84l-9.14-3.99c-2.21-.96-3.97-2.73-4.93-4.93l-3.99-9.14c-.31-.71-1.31-.71-1.62,0l-3.99,9.14c-.96,2.21-2.73,3.97-4.93,4.93l-9.15,3.99c-.71.31-.71,1.31,0,1.62l9.31,4.12c2.2.97,3.96,2.75,4.91,4.96l3.86,8.96c.31.71,1.32.71,1.63,0l3.98-9.12c.96-2.21,2.73-3.97,4.93-4.93l9.14-3.99c.71-.31.71-1.31,0-1.62Z"/>
           </svg>
           <div>
-            <h2 className="text-lg font-semibold">Shop with AI</h2>
+            <h2 className="text-lg font-serif">shop with ai</h2>
             <p className="text-xs text-white/80">Powered by Shopify</p>
           </div>
         </div>

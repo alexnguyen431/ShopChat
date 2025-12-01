@@ -31,7 +31,7 @@ export default function Home() {
         <div className="absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-black/60 via-black/30 to-transparent pointer-events-none" />
         {/* Text overlay */}
         <div className="absolute bottom-8 left-8 z-10 text-white">
-          <h2 className="text-4xl font-bold mb-2 font-serif">Black Friday Sale Now On</h2>
+          <h2 className="text-4xl mb-2 font-serif">black friday sale now on</h2>
           <p className="text-xl font-sans">Up to 40% off</p>
         </div>
       </section>
@@ -44,7 +44,7 @@ export default function Home() {
       {/* New Launches */}
       <section className="mb-20">
         <div className="flex items-center justify-between mb-8">
-          <h2 className="text-2xl font-bold uppercase tracking-wide font-serif">New Launches</h2>
+          <h2 className="text-2xl tracking-wide font-serif">new launches</h2>
           <Link href="/collections/new-launches" className="text-sm font-medium hover:underline">
             View all
           </Link>
@@ -82,7 +82,7 @@ export default function Home() {
       {/* Featured Products */}
       <section>
         <div className="flex items-center justify-between mb-8">
-          <h2 className="text-2xl font-bold uppercase tracking-wide font-serif">Featured</h2>
+          <h2 className="text-2xl tracking-wide font-serif">featured</h2>
           <Link href="/collections/all" className="text-sm font-medium hover:underline">
             View all
           </Link>
