@@ -41,6 +41,11 @@ export async function POST(request: NextRequest) {
     // Check if Gemini API key is available
     const geminiApiKey = process.env.GEMINI_API_KEY
 
+    // Log for debugging (remove in production if needed)
+    if (!geminiApiKey) {
+      console.log('GEMINI_API_KEY is not set in environment variables')
+    }
+
     if (geminiApiKey) {
       // Use Google Gemini API
       try {
@@ -231,12 +236,13 @@ Provide a helpful, concise response. When mentioning products:
             })),
             query,
           })
-        } else {
-          const errorData = await geminiResponse.text()
-          console.error('Gemini API Error Response:', geminiResponse.status, errorData)
-          console.error('API Key present:', !!geminiApiKey)
-          // Fall through to fallback
-        }
+                    } else {
+                      const errorData = await geminiResponse.text()
+                      console.error('Gemini API Error Response:', geminiResponse.status, errorData)
+                      console.error('API Key present:', !!geminiApiKey)
+                      console.error('API Key length:', geminiApiKey?.length || 0)
+                      // Fall through to fallback
+                    }
       } catch (geminiError) {
         console.error('Gemini API Error:', geminiError)
         // Fall through to fallback
