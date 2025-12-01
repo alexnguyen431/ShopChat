@@ -4,7 +4,7 @@ import Navigation from '@/components/Navigation'
 import Footer from '@/components/Footer'
 
 export const metadata: Metadata = {
-  title: "Alex's Atelier | Premium Clothing & Accessories",
+  title: "alex's clothing store | Premium Clothing & Accessories",
   description: 'Discover premium fashion pieces with minimalist design and exceptional quality.',
 }
 

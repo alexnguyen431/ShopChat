@@ -59,7 +59,7 @@ export async function POST(request: NextRequest) {
             body: JSON.stringify({
               contents: [{
                 parts: [{
-                  text: `You are a helpful shopping assistant for Alex's Atelier, a premium fashion store. 
+                  text: `You are a helpful shopping assistant for alex's clothing store, a premium fashion store. 
 Help customers find products, answer questions about materials, sizes, prices, styles, popularity, and fit recommendations.
 
 IMPORTANT GUIDELINES:
