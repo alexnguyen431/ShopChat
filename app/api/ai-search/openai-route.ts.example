@@ -1,0 +1,96 @@
+// Example: OpenAI Integration
+// Rename this file to route.ts and add your OpenAI API key to .env.local
+// 
+// .env.local:
+// OPENAI_API_KEY=your-api-key-here
+
+import { NextRequest, NextResponse } from 'next/server'
+import { getAllProducts } from '@/lib/mockData'
+
+export async function POST(request: NextRequest) {
+  try {
+    const { query } = await request.json()
+
+    if (!query) {
+      return NextResponse.json(
+        { error: 'Query is required' },
+        { status: 400 }
+      )
+    }
+
+    // Get products for context
+    const products = getAllProducts()
+    const productContext = products.map(p => 
+      `${p.title} - ${p.price}${p.color ? ` (${p.color})` : ''}${p.description ? ` - ${p.description}` : ''}`
+    ).join('\n')
+
+    // Call OpenAI API
+    const openaiResponse = await fetch('https://api.openai.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
+      },
+      body: JSON.stringify({
+        model: 'gpt-4o-mini', // or 'gpt-3.5-turbo' for cheaper option
+        messages: [
+          {
+            role: 'system',
+            content: `You are a helpful shopping assistant for Alex's Atelier, a premium fashion store. 
+            Help customers find products, answer questions about materials, sizes, prices, and styles.
+            
+            Available products:
+            ${productContext}
+            
+            Be concise, friendly, and helpful. If asked about specific products, provide relevant details.`
+          },
+          {
+            role: 'user',
+            content: query
+          }
+        ],
+        temperature: 0.7,
+        max_tokens: 500,
+      }),
+    })
+
+    if (!openaiResponse.ok) {
+      throw new Error('OpenAI API error')
+    }
+
+    const data = await openaiResponse.json()
+    const aiResponse = data.choices[0].message.content
+
+    // Find matching products based on query
+    const queryLower = query.toLowerCase()
+    const matchingProducts = products.filter(product => {
+      const searchTerms = [
+        product.title.toLowerCase(),
+        product.color?.toLowerCase(),
+        product.collection?.toLowerCase(),
+        product.description?.toLowerCase(),
+      ].filter(Boolean)
+      
+      return searchTerms.some(term => term.includes(queryLower))
+    })
+
+    return NextResponse.json({
+      response: aiResponse,
+      products: matchingProducts.slice(0, 10).map(p => ({
+        id: p.id,
+        title: p.title,
+        handle: p.handle,
+        price: p.price,
+        color: p.color,
+      })),
+      query,
+    })
+  } catch (error) {
+    console.error('OpenAI Search Error:', error)
+    return NextResponse.json(
+      { error: 'Failed to process AI search' },
+      { status: 500 }
+    )
+  }
+}
+
